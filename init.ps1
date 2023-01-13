@@ -13,6 +13,8 @@ az acr login -n $RegistryName
 docker pull $HomebridgeImage
 docker tag $HomebridgeImage $ACRHomebridgeImage
 docker push $ACRHomebridgeImage
+az provider register --namespace Microsoft.App
+az provider register --namespace Microsoft.ContainerService
 az deployment group create `
     -g $ResourceGroupName `
     -n "${ProjectName}-deployment" `

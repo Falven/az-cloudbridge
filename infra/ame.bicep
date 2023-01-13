@@ -25,12 +25,12 @@ resource vnet 'Microsoft.Network/virtualNetworks@2022-07-01' existing = {
   }
 }
 
-resource law 'Microsoft.OperationalInsights/workspaces@2021-06-01' existing = {
+resource law 'Microsoft.OperationalInsights/workspaces@2022-10-01' existing = {
   name: lawName
   scope: resourceGroup()
 }
 
-resource ame 'Microsoft.App/managedEnvironments@2022-01-01-preview' = {
+resource ame 'Microsoft.App/managedEnvironments@2022-06-01-preview' = {
   name: 'cae-${projectName}-${environment}-${location}-001'
   location: location
   properties: {
