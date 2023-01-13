@@ -13,13 +13,45 @@ param registryName string
 @description('Name of the container image.')
 param containerImage string
 
+module snet 'snet.bicep' = {
+  name: 'snet-deployment'
+  params: {
+    projectName: projectName
+    environment: environment
+    location: location
+  }
+}
+
 module vnet 'vnet.bicep' = {
   name: 'vnet-deployment'
   params: {
     projectName: projectName
     environment: environment
     location: location
+    snetName: snet.outputs.name
   }
+  dependsOn: [ snet ]
+}
+
+module pip 'pip.bicep' = {
+  name: 'pip-deployment'
+  params: {
+    projectName: projectName
+    environment: environment
+    location: location
+  }
+}
+
+module vng 'vng.bicep' = {
+  name: 'vng-deployment'
+  params: {
+    projectName: projectName
+    environment: environment
+    location: location
+    snetName: snet.outputs.name
+    pipName: pip.outputs.name
+  }
+  dependsOn: [ pip ]
 }
 
 module law 'law.bicep' = {
