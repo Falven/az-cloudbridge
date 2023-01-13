@@ -44,7 +44,7 @@ module vng 'vng.bicep' = {
     projectName: projectName
     environment: environment
     location: location
-    snetId: vnet.outputs.snetId
+    snetId: vnet.outputs.gatewaySnetId
     pipId: pip.outputs.id
   }
 }
@@ -76,7 +76,7 @@ module ame 'ame.bicep' = {
     projectName: projectName
     environment: environment
     location: location
-    snetId: vnet.outputs.snetId
+    snetId: vnet.outputs.defaultSnetId
     lawName: law.outputs.name
   }
 }

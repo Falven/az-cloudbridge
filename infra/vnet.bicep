@@ -16,12 +16,20 @@ resource vnet 'Microsoft.Network/virtualNetworks@2022-07-01' = {
     }
   }
 
-  resource snet 'subnets@2022-07-01' = {
-    name: 'snet-${projectName}-${environment}-${location}-001'
+  resource defaultSnet 'subnets@2022-07-01' = {
+    name: 'default'
+    properties: {
+      addressPrefix: '10.0.0.0/24'
+    }
+  }
+
+  resource gatewaySnet 'subnets@2022-07-01' = {
+    name: 'GatewaySubnet'
     properties: {
       addressPrefix: '10.0.0.0/23'
     }
   }
 }
 
-output snetId string = resourceId('Microsoft.Network/VirtualNetworks/subnets', vnet.name, vnet::snet.name)
+output defaultSnetId string = resourceId('Microsoft.Network/VirtualNetworks/subnets', vnet.name, vnet::defaultSnet.name)
+output gatewaySnetId string = resourceId('Microsoft.Network/VirtualNetworks/subnets', vnet.name, vnet::gatewaySnet.name)
