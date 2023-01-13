@@ -28,6 +28,7 @@ resource vnet 'Microsoft.Network/virtualNetworks@2022-07-01' = {
     properties: {
       addressPrefix: '10.0.2.0/24'
     }
+    dependsOn: [ defaultSnet ]
   }
 }
 
