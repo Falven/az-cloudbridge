@@ -7,16 +7,11 @@ param environment string
 @description('Location of Managed Environment.')
 param location string
 
-@description('Name of Subnet.')
-param snetName string
+@description('Resource Id of the Subnet.')
+param snetId string
 
-@description('Name of Log Analytics Workspace.')
+@description('Name of the Log Analytics Workspace.')
 param lawName string
-
-resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' existing = {
-  name: snetName
-  scope: resourceGroup()
-}
 
 resource law 'Microsoft.OperationalInsights/workspaces@2022-10-01' existing = {
   name: lawName
@@ -35,7 +30,7 @@ resource ame 'Microsoft.App/managedEnvironments@2022-06-01-preview' = {
       }
     }
     vnetConfiguration: {
-      infrastructureSubnetId: subnet.id
+      infrastructureSubnetId: snetId
     }
   }
 }

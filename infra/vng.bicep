@@ -7,21 +7,11 @@ param environment string
 @description('Location of VNET.')
 param location string = resourceGroup().location
 
-@description('Name of the Subnet.')
-param snetName string
+@description('Resource Id of the Subnet.')
+param snetId string
 
-@description('Name of the Public IP Address.')
-param pipName string
-
-resource snet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' existing = {
-  name: snetName
-  scope: resourceGroup()
-}
-
-resource pip 'Microsoft.Network/publicIPAddresses@2022-07-01' existing = {
-  name: pipName
-  scope: resourceGroup()
-}
+@description('Resource Id of the Public IP Address.')
+param pipId string
 
 resource vng 'Microsoft.Network/virtualNetworkGateways@2022-07-01' = {
   name: 'vng-${projectName}-${environment}-${location}-001'
@@ -40,10 +30,10 @@ resource vng 'Microsoft.Network/virtualNetworkGateways@2022-07-01' = {
         properties: {
           privateIPAllocationMethod: 'Dynamic'
           subnet: {
-            id: snet.name
+            id: snetId
           }
           publicIPAddress: {
-            id: pip.id
+            id: pipId
           }
         }
       }

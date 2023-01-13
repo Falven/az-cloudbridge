@@ -29,16 +29,6 @@ module vnet 'vnet.bicep' = {
   }
 }
 
-module snet 'snet.bicep' = {
-  name: 'snet-deployment'
-  params: {
-    projectName: projectName
-    environment: environment
-    location: location
-    vnetName: vnet.outputs.name
-  }
-}
-
 module pip 'pip.bicep' = {
   name: 'pip-deployment'
   params: {
@@ -54,8 +44,8 @@ module vng 'vng.bicep' = {
     projectName: projectName
     environment: environment
     location: location
-    snetName: snet.outputs.name
-    pipName: pip.outputs.name
+    snetId: vnet.outputs.snetId
+    pipId: pip.outputs.id
   }
 }
 
@@ -86,7 +76,7 @@ module ame 'ame.bicep' = {
     projectName: projectName
     environment: environment
     location: location
-    snetName: snet.outputs.name
+    snetId: vnet.outputs.snetId
     lawName: law.outputs.name
   }
 }

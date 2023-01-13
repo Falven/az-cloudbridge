@@ -15,4 +15,4 @@ resource pip 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
   }
 }
 
-output name string = pip.name
+output id string = resourceId('Microsoft.Network/publicIPAddresses', pip.name)
