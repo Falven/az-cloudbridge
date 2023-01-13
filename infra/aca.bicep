@@ -46,10 +46,6 @@ resource containerApp 'Microsoft.App/containerApps@2022-06-01-preview' = {
           passwordSecretRef: 'registry-password'
         }
       ]
-      ingress: {
-        external: true
-        targetPort: 80
-      }
     }
     template: {
       containers: [
@@ -58,6 +54,10 @@ resource containerApp 'Microsoft.App/containerApps@2022-06-01-preview' = {
           name: projectName
           env: appSettings
           command: command
+          resources: {
+            cpu: 2
+            memory: '8GB'
+          }
         }
       ]
       scale: {
