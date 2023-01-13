@@ -7,13 +7,13 @@ param environment string
 @description('Location of SNET.')
 param location string = resourceGroup().location
 
-@description('Subnet Address Space (CIDR notation, /23 or greater)')
-param subnetAddressSpace string = '10.0.0.0/23'
+@description('VNET parent resource name used in creation of SNET name.')
+param vnetName string
 
 resource snet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  name: 'snet-${projectName}-${environment}-${location}-001'
+  name: '${vnetName}/snet-${projectName}-${environment}-${location}-002'
   properties: {
-    addressPrefix: subnetAddressSpace
+    addressPrefix: '10.0.0.0/23'
   }
 }
 

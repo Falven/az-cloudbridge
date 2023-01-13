@@ -56,7 +56,7 @@ resource containerApp 'Microsoft.App/containerApps@2022-06-01-preview' = {
           command: command
           resources: {
             cpu: 2
-            memory: '8GB'
+            memory: '4Gi'
           }
         }
       ]

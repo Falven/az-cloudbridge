@@ -13,14 +13,12 @@ param registryName string
 @description('Name of the container image.')
 param containerImage string
 
-module snet 'snet.bicep' = {
-  name: 'snet-deployment'
-  params: {
-    projectName: projectName
-    environment: environment
-    location: location
-  }
-}
+@description('VPN Fully Qualified Domain Name.')
+param vpnFQDN string
+
+@secure()
+@description('VPN Key.')
+param vpnKey string
 
 module vnet 'vnet.bicep' = {
   name: 'vnet-deployment'
@@ -28,9 +26,17 @@ module vnet 'vnet.bicep' = {
     projectName: projectName
     environment: environment
     location: location
-    snetName: snet.outputs.name
   }
-  dependsOn: [ snet ]
+}
+
+module snet 'snet.bicep' = {
+  name: 'snet-deployment'
+  params: {
+    projectName: projectName
+    environment: environment
+    location: location
+    vnetName: vnet.outputs.name
+  }
 }
 
 module pip 'pip.bicep' = {
@@ -51,7 +57,18 @@ module vng 'vng.bicep' = {
     snetName: snet.outputs.name
     pipName: pip.outputs.name
   }
-  dependsOn: [ pip ]
+}
+
+module vco 'vco.bicep' = {
+  name: 'vco-deployment'
+  params: {
+    projectName: projectName
+    environment: environment
+    location: location
+    vngName: vng.outputs.name
+    fqdn: vpnFQDN
+    key: vpnKey
+  }
 }
 
 module law 'law.bicep' = {
@@ -69,11 +86,9 @@ module ame 'ame.bicep' = {
     projectName: projectName
     environment: environment
     location: location
-    vnetName: vnet.outputs.name
     snetName: snet.outputs.name
     lawName: law.outputs.name
   }
-  dependsOn: [ vnet, law ]
 }
 
 module aca 'aca.bicep' = {
@@ -87,5 +102,4 @@ module aca 'aca.bicep' = {
     containerImage: containerImage
     command: [ '--net=host', '--name=homebridge', '-v', '$(pwd)/homebridge:/homebridge' ]
   }
-  dependsOn: [ ame ]
 }

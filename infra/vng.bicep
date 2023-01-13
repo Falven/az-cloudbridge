@@ -50,3 +50,5 @@ resource vng 'Microsoft.Network/virtualNetworkGateways@2022-07-01' = {
     ]
   }
 }
+
+output name string = vng.name

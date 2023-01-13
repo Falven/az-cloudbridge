@@ -23,4 +23,6 @@ az deployment group create `
     environment=$Environment `
     location=$Location `
     registryName=$RegistryName `
-    containerImage=$ACRHomebridgeImage
+    containerImage=$ACRHomebridgeImage `
+    vpnFQDN="" `
+    vpnKey=""
