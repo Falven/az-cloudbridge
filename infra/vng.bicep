@@ -41,4 +41,4 @@ resource vng 'Microsoft.Network/virtualNetworkGateways@2022-07-01' = {
   }
 }
 
-output name string = vng.name
+output id string = resourceId('Microsoft.Network/virtualNetworkGateways', vng.name)

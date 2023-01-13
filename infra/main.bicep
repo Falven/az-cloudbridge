@@ -65,8 +65,8 @@ module vco 'vco.bicep' = {
     projectName: projectName
     environment: environment
     location: location
-    vngName: vng.outputs.name
-    lngName: lng.outputs.name
+    vngId: vng.outputs.id
+    lngId: lng.outputs.id
     key: vpnKey
   }
 }

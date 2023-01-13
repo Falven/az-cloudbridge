@@ -35,4 +35,4 @@ resource ame 'Microsoft.App/managedEnvironments@2022-06-01-preview' = {
   }
 }
 
-output id string = ame.id
+output id string = resourceId('Microsoft.App/managedEnvironments', ame.name)

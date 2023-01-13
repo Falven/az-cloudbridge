@@ -24,4 +24,4 @@ resource lng 'Microsoft.Network/localNetworkGateways@2022-07-01' = {
   }
 }
 
-output name string = lng.name
+output id string = resourceId('Microsoft.Network/localNetworkGateways', lng.name)
