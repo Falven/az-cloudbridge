@@ -37,9 +37,9 @@ module ame 'ame.bicep' = {
     projectName: projectName
     environment: environment
     location: location
-    vnetName: vnet.name
+    vnetName: vnet.outputs.name
     snetName: vnet.outputs.snetName
-    lawName: law.name
+    lawName: law.outputs.name
   }
   dependsOn: [ vnet, law ]
 }

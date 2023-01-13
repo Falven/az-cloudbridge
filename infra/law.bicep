@@ -16,3 +16,5 @@ resource law 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
     }
   }
 }
+
+output name string = law.name

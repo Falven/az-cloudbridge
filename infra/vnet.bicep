@@ -33,4 +33,5 @@ resource vnet 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   }
 }
 
+output name string = vnet.name
 output snetName string = vnet::snet.name
