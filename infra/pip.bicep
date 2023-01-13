@@ -8,7 +8,7 @@ param environment string
 param location string = resourceGroup().location
 
 @description('The public IP address allocation method.')
-param allocationMethod string = 'Dynamic'
+param allocationMethod string = 'Static'
 
 @description('IP SKU.')
 param sku string = 'Standard'
