@@ -19,6 +19,7 @@ resource vnet 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   resource defaultSnet 'subnets@2022-07-01' = {
     name: 'default'
     properties: {
+      // /23 is a requirement for ACA
       addressPrefix: '10.0.0.0/23'
     }
   }
