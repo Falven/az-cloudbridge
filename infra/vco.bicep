@@ -10,8 +10,8 @@ param location string = resourceGroup().location
 @description('Virtual Network Gateway Name.')
 param vngName string
 
-@description('Connection Fully Qualified Domain Name.')
-param fqdn string
+@description('Local Network Gateway Name.')
+param lngName string
 
 @secure()
 @description('Connection Key.')
@@ -22,18 +22,19 @@ resource vng 'Microsoft.Network/virtualNetworkGateways@2022-07-01' existing = {
   scope: resourceGroup()
 }
 
+resource lng 'Microsoft.Network/localNetworkGateways@2022-07-01' existing = {
+  name: lngName
+  scope: resourceGroup()
+}
+
 resource vco 'Microsoft.Network/connections@2022-07-01' = {
   name: 'vng-${projectName}-${environment}-${location}-001'
   location: location
   properties: {
     connectionType: 'IPsec'
     virtualNetworkGateway1: vng
-    localNetworkGateway2: {
-      id: 'Default'
-      properties: {
-        fqdn: fqdn
-      }
-    }
+    localNetworkGateway2: lng
     sharedKey: key
+    dpdTimeoutSeconds: 45
   }
 }

@@ -49,6 +49,16 @@ module vng 'vng.bicep' = {
   }
 }
 
+module lng 'lng.bicep' = {
+  name: 'lng-deployment'
+  params: {
+    projectName: projectName
+    environment: environment
+    location: location
+    fqdn: vpnFQDN
+  }
+}
+
 module vco 'vco.bicep' = {
   name: 'vco-deployment'
   params: {
@@ -56,7 +66,7 @@ module vco 'vco.bicep' = {
     environment: environment
     location: location
     vngName: vng.outputs.name
-    fqdn: vpnFQDN
+    lngName: lng.outputs.name
     key: vpnKey
   }
 }
