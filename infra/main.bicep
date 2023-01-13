@@ -14,7 +14,7 @@ param vpnFQDN string
 @description('VPN Key.')
 param vpnKey string
 
-@description('The Admins username of the VM.')
+@description('The Admin username of the VM.')
 param adminUsername string = 'azureuser'
 
 @secure()
@@ -47,6 +47,10 @@ module vng 'vng.bicep' = {
     location: location
     snetId: vnet.outputs.gatewaySnetId
     pipId: pip.outputs.id
+    sku: {
+      name: 'basic'
+      sku: 'VpnGw1AZ'
+    }
   }
 }
 

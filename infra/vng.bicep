@@ -13,16 +13,19 @@ param snetId string
 @description('Resource Id of the Public IP Address.')
 param pipId string
 
+@description('The reference to the VirtualNetworkGatewaySku resource which represents the SKU selected for Virtual network gateway.')
+param sku object = {
+  name: 'Basic'
+  tier: 'Basic'
+}
+
 resource vng 'Microsoft.Network/virtualNetworkGateways@2022-07-01' = {
   name: 'vng-${projectName}-${environment}-${location}-001'
   location: location
   properties: {
     gatewayType: 'Vpn'
     vpnType: 'RouteBased'
-    sku: {
-      name: 'Basic'
-      tier: 'Basic'
-    }
+    sku: sku
     vpnGatewayGeneration: 'Generation1'
     ipConfigurations: [
       {
