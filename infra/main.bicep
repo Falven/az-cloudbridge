@@ -49,7 +49,7 @@ module vng 'vng.bicep' = {
     pipId: pip.outputs.id
     sku: {
       name: 'basic'
-      sku: 'VpnGw1AZ'
+      tier: 'VpnGw1AZ'
     }
   }
 }
