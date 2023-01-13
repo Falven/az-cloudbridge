@@ -11,7 +11,7 @@ param location string = resourceGroup().location
 param vnetName string
 
 resource snet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
-  name: '${vnetName}/snet-${projectName}-${environment}-${location}-002'
+  name: '${vnetName}/snet-${projectName}-${environment}-${location}-001'
   properties: {
     addressPrefix: '10.0.0.0/23'
   }
