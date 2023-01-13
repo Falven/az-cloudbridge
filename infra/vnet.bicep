@@ -19,14 +19,14 @@ resource vnet 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   resource defaultSnet 'subnets@2022-07-01' = {
     name: 'default'
     properties: {
-      addressPrefix: '10.0.0.0/24'
+      addressPrefix: '10.0.0.0/23'
     }
   }
 
   resource gatewaySnet 'subnets@2022-07-01' = {
     name: 'GatewaySubnet'
     properties: {
-      addressPrefix: '10.0.0.0/23'
+      addressPrefix: '10.0.2.0/24'
     }
   }
 }
