@@ -7,18 +7,19 @@ param environment string
 @description('Location of services.')
 param location string = resourceGroup().location
 
-@description('Name of the container registry.')
-param registryName string
-
-@description('Name of the container image.')
-param containerImage string
-
 @description('VPN Fully Qualified Domain Name.')
 param vpnFQDN string
 
 @secure()
 @description('VPN Key.')
 param vpnKey string
+
+@description('The Admins username of the VM.')
+param adminUsername string = 'azureuser'
+
+@secure()
+@description('The Admin Password of the VM.')
+param adminPassword string
 
 module vnet 'vnet.bicep' = {
   name: 'vnet-deployment'
@@ -71,8 +72,8 @@ module vco 'vco.bicep' = {
   }
 }
 
-module law 'law.bicep' = {
-  name: 'law-deployment'
+module nsg 'nsg.bicep' = {
+  name: 'nsg-deployment'
   params: {
     projectName: projectName
     environment: environment
@@ -80,26 +81,26 @@ module law 'law.bicep' = {
   }
 }
 
-module ame 'ame.bicep' = {
-  name: 'ame-deployment'
+module nic 'nic.bicep' = {
+  name: 'nic-deployment'
   params: {
     projectName: projectName
     environment: environment
     location: location
-    snetId: vnet.outputs.defaultSnetId
-    lawName: law.outputs.name
+    nsgId: nsg.outputs.id
+    pipId: pip.outputs.id
+    subnetId: vnet.outputs.defaultSnetId
   }
 }
 
-module aca 'aca.bicep' = {
-  name: 'aca-deployment'
+module vm 'vm.bicep' = {
+  name: 'vm-deployment'
   params: {
     projectName: projectName
     environment: environment
     location: location
-    managedEnvironmentId: ame.outputs.id
-    registryName: registryName
-    containerImage: containerImage
-    command: [ '--net=host', '--name=homebridge', '-v', '$(pwd)/homebridge:/homebridge' ]
+    adminUsername: adminUsername
+    adminPassword: adminPassword
+    nicId: nic.outputs.id
   }
 }
