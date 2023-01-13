@@ -13,6 +13,9 @@ param subnetId string
 @description('Public Ip Id.')
 param pipId string
 
+@description('Whether to delete the PIP on deletion of this nic.')
+param pipDeleteOption string = 'Delete'
+
 @description('NSG Id.')
 param nsgId string
 
@@ -30,6 +33,9 @@ resource nic 'Microsoft.Network/networkInterfaces@2021-05-01' = {
           privateIPAllocationMethod: 'Dynamic'
           publicIPAddress: {
             id: pipId
+            properties: {
+              deleteOption: pipDeleteOption
+            }
           }
         }
       }
