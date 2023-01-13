@@ -22,7 +22,7 @@ param command array = []
 @description('Container AppSettings.')
 param appSettings array = []
 
-resource registry 'Microsoft.ContainerRegistry/registries@2022-12-01' existing = {
+resource registry 'Microsoft.ContainerRegistry/registries@2022-02-01-preview' existing = {
   name: registryName
   scope: resourceGroup()
 }
