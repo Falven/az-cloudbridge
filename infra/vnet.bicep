@@ -28,6 +28,8 @@ resource vnet 'Microsoft.Network/virtualNetworks@2022-07-01' = {
     properties: {
       addressPrefix: '10.0.2.0/24'
     }
+    // Needed or Bicep tries to deploy the Subnets in parallel.
+    // Error: Another operation on this or dependent resource is in progress.
     dependsOn: [ defaultSnet ]
   }
 }
